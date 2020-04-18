@@ -16,14 +16,15 @@ class MovieList extends StatelessWidget {
   void navigate(context, movie) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => MovieDetail(
-          movie: movie,
-        )));
+              movie: movie,
+            )));
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 220,
+      margin: EdgeInsets.only(left: 16, right: 16),
       child: FutureBuilder(
         builder: (context, AsyncSnapshot<List<MovieDto>> snapshot) {
           if (snapshot.hasData &&
@@ -64,4 +65,3 @@ class MovieList extends StatelessWidget {
     );
   }
 }
-

@@ -15,7 +15,7 @@ class MovieCategoryList extends StatelessWidget {
       uriPath: "upcoming",
     ),
     CategoryDto(
-      title: "popular",
+      title: "Popular",
       uriPath: "popular",
     ),
     CategoryDto(
@@ -27,13 +27,7 @@ class MovieCategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(
-        left: 8,
-        right: 8,
-      ),
-      padding: EdgeInsets.only(
-        top: 32,
-      ),
+      margin: EdgeInsets.only(top: 16),
       child: ListView.builder(
         shrinkWrap: true,
         padding: EdgeInsets.zero,
