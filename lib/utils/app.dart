@@ -1,0 +1,3 @@
+bool checkConnection() {
+  return true;
+}

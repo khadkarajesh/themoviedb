@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
 
-import '../movie_dto.dart';
-import '../video_dto.dart';
+import '../dto/movie_dto.dart';
+import '../dto/video_dto.dart';
 
 class ApiService {
   static const String BASE_URL = "api.themoviedb.org";

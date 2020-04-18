@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
-import 'package:movie/data/movie_dto.dart';
+import 'package:movie/data/dto/movie_dto.dart';
 
 import 'movie.dart';
 import 'movie_detail.dart';

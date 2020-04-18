@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
-import 'package:movie/data/movie_dto.dart';
-import 'package:movie/data/video_dto.dart';
+import 'package:movie/data/dto/movie_dto.dart';
+import 'package:movie/data/dto/video_dto.dart';
 import 'package:movie/widgets/overview.dart';
 import 'package:movie/widgets/poster.dart';
 import 'package:movie/widgets/video.dart';
