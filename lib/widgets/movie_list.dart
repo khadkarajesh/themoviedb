@@ -23,7 +23,7 @@ class MovieList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 325,
+      height: 220,
       child: FutureBuilder(
         builder: (context, AsyncSnapshot<List<MovieDto>> snapshot) {
           if (snapshot.hasData &&

@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_dto.dart';
-import 'package:movie/data/dto/video_dto.dart';
 import 'package:movie/widgets/overview.dart';
 import 'package:movie/widgets/poster.dart';
 import 'package:movie/widgets/similar_movie_list.dart';
@@ -22,15 +21,9 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   final ApiService apiService = ApiService();
-  VideoDto video;
-  List<VideoDto> videos = <VideoDto>[];
 
   @override
   Widget build(BuildContext context) {
-    apiService.getVideos(widget.movie.id).then((value) => setState(() {
-          video = value[0];
-        }));
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.grey),
@@ -62,45 +55,43 @@ class _MovieDetailState extends State<MovieDetail> {
         ],
       ),
       body: Container(
-        child: video == null
-            ? CircularProgressIndicator()
-            : ListView(
+        child: ListView(
+          children: <Widget>[
+            Video(
+              movieId: widget.movie.id,
+              posterUrl: widget.movie.backDropPath,
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
                 children: <Widget>[
-                  Video(
-                    videoKey: video.key,
-                    posterUrl: widget.movie.backDropPath,
+                  Poster(
+                    posterPath: widget.movie.posterPath,
+                    title: widget.movie.title,
+                    year: widget.movie.releaseDate,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    child: Column(
-                      children: <Widget>[
-                        Poster(
-                          posterPath: widget.movie.posterPath,
-                          title: widget.movie.title,
-                          year: widget.movie.releaseDate,
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Overview(
-                          overview: widget.movie.overview,
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        SuggestedMovies(
-                          movieId: widget.movie.id,
-                          category: "similar",
-                        ),
-//                        SuggestedMovies(
-//                          movieId: widget.movie.id,
-//                          category: "recommendations",
-//                        )
-                      ],
-                    ),
+                  SizedBox(
+                    height: 16,
                   ),
+                  Overview(
+                    overview: widget.movie.overview,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  SuggestedMovies(
+                    movieId: widget.movie.id,
+                    category: "similar",
+                  ),
+                  SuggestedMovies(
+                    movieId: widget.movie.id,
+                    category: "recommendations",
+                  )
                 ],
               ),
+            ),
+          ],
+        ),
       ),
     );
   }
