@@ -35,7 +35,7 @@ class _SuggestedMoviesState extends State<SuggestedMovies> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 325,
+      height: 220,
       child: FutureBuilder(
         future: service.getSuggestions(movieId, category),
         builder: (context, AsyncSnapshot<List<MovieDto>> snapshot) {

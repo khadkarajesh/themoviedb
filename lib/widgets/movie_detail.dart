@@ -26,19 +26,30 @@ class _MovieDetailState extends State<MovieDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.grey),
+        iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
         title: Text(""),
         leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
+              color: Colors.black,
             ),
             onPressed: () {
               Navigator.pop(context);
             }),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.bookmark), onPressed: null),
-          IconButton(icon: Icon(Icons.search), onPressed: null),
+          IconButton(
+              icon: Icon(
+                Icons.bookmark,
+                color: Colors.black,
+              ),
+              onPressed: null),
+          IconButton(
+              icon: Icon(
+                Icons.search,
+                color: Colors.black,
+              ),
+              onPressed: null),
           PopupMenuButton<Choice>(
             itemBuilder: (BuildContext context) {
               return choices
@@ -79,9 +90,64 @@ class _MovieDetailState extends State<MovieDetail> {
                   SizedBox(
                     height: 16,
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Similar Movies",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "Popular with similar viewers",
+                            textAlign: TextAlign.left,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 16.0,
+                      ),
+                      Icon(Icons.arrow_forward),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
                   SuggestedMovies(
                     movieId: widget.movie.id,
                     category: "similar",
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Recommendations",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 16.0,
+                      ),
+                      Icon(Icons.arrow_forward),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16,
                   ),
                   SuggestedMovies(
                     movieId: widget.movie.id,
