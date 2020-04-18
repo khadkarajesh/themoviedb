@@ -49,10 +49,7 @@ class Movie extends StatelessWidget {
             direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                "Sci-Fi",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              Text("Sci-Fi"),
               Row(
                 children: <Widget>[
                   Icon(Icons.favorite_border),
