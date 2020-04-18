@@ -36,11 +36,24 @@ class ApiService {
   Future<List<VideoDto>> getVideos(int movieId) async {
     try {
       var uri =
-      Uri.https(BASE_URL, "/3/movie/$movieId/videos", {'api_key': apiKey});
+          Uri.https(BASE_URL, "/3/movie/$movieId/videos", {'api_key': apiKey});
       var response = await client.get(uri.toString());
       var body = json.decode(response.body);
       List<dynamic> results = body['results'];
       return results.map((dynamic e) => VideoDto.fromJson(e)).toList();
+    } on HttpException catch (e) {
+      throw (e.message);
+    }
+  }
+
+  Future<List<MovieDto>> getSuggestions(int movieId, category) async {
+    try {
+      var uri = Uri.https(
+          BASE_URL, "3/movie/$movieId/$category", {'api_key': apiKey});
+      var response = await client.get(uri.toString());
+      var body = json.decode(response.body);
+      List<dynamic> results = body['results'];
+      return results.map((dynamic e) => MovieDto.fromJson(e)).toList();
     } on HttpException catch (e) {
       throw (e.message);
     }
