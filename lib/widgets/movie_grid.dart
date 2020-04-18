@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_dto.dart';
+import 'package:movie/widgets/grid_item.dart';
 
 import 'movie.dart';
 import 'movie_detail.dart';
@@ -34,42 +35,50 @@ class _MovieGrid extends State<MovieGrid> {
         appBar: AppBar(
           title: Text(widget.category),
         ),
-        body: FutureBuilder<List<MovieDto>>(
-            future: apiService.getMovies(widget.uriPath),
-            builder: (context, AsyncSnapshot<List<MovieDto>> snapshot) {
-              if (snapshot.hasData &&
-                  snapshot.connectionState ==
-                      ConnectionState.done) if (snapshot.hasData) {
-                var movies = snapshot.data;
-                return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                    ),
-                    itemBuilder: (context, index) {
-                      var movie = movies[index];
-                      return GestureDetector(
-                        onTap: () {
-                          navigate(context, movie);
-                        },
-                        child: Movie(
-                          poster: movie.posterPath,
-                          title: movie.title,
-                          genre: "",
-                          releaseDate: movie.releaseDate,
-                          rating: movie.voteAverage,
-                        ),
-                      );
-                    });
-              }
-              if (snapshot.hasError &&
-                  snapshot.connectionState == ConnectionState.done) {
-                return Text("${snapshot.error}");
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }));
+        body: Container(
+          padding: EdgeInsets.all(16),
+          child: FutureBuilder<List<MovieDto>>(
+              future: apiService.getMovies(widget.uriPath),
+              builder: (context, AsyncSnapshot<List<MovieDto>> snapshot) {
+                if (snapshot.hasData &&
+                    snapshot.connectionState ==
+                        ConnectionState.done) if (snapshot.hasData) {
+                  var movies = snapshot.data;
+                  var size = MediaQuery.of(context).size;
+                  final double itemHeight = (size.height) / 2;
+                  final double itemWidth = size.width / 2;
+                  return GridView.builder(
+                      itemCount: movies.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 8,
+                        mainAxisSpacing: 8,
+                        childAspectRatio: (itemWidth / itemHeight),
+                      ),
+                      itemBuilder: (context, index) {
+                        var movie = movies[index];
+                        return GestureDetector(
+                          onTap: () {
+                            navigate(context, movie);
+                          },
+                          child: MovieGridItem(
+                            poster: movie.posterPath,
+                            title: movie.title,
+                            genre: "",
+                            releaseDate: movie.releaseDate,
+                            rating: movie.voteAverage,
+                          ),
+                        );
+                      });
+                }
+                if (snapshot.hasError &&
+                    snapshot.connectionState == ConnectionState.done) {
+                  return Text("${snapshot.error}");
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }),
+        ));
   }
 }
