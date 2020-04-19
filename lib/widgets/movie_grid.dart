@@ -12,136 +12,17 @@ import 'movie_detail.dart';
 class MovieGrid extends StatefulWidget {
   final String category;
   final String uriPath;
+  int page = 1;
 
   MovieGrid({this.category, this.uriPath});
 
   @override
   State<StatefulWidget> createState() {
-    return _MovieGrid();
+    return _GridMovieItem();
   }
 }
 
-class _MovieGrid extends State<MovieGrid> {
-  final ApiService apiService = ApiService();
-  var _scrollController = ScrollController();
-  var page = 1;
-  var totalPages = 1;
-  List<MovieDto> movies = List();
-  var isLoading = false;
-
-  void navigate(context, movie) {
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => MovieDetail(
-              movie: movie,
-            )));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    apiService.getPaginatedMovies(widget.uriPath, page).then((value) {
-      setState(() {
-        isLoading = false;
-        movies.addAll(value.results);
-      });
-    }).catchError((onError) {
-      setState(() {
-        isLoading = false;
-      });
-      SnackBar(content: onError);
-    });
-    _scrollController.addListener(() {
-      if (_scrollController.position.atEdge &&
-          _scrollController.position.pixels == 0) {
-        page = 1;
-      } else if (_scrollController.position.atEdge &&
-          _scrollController.position.pixels > 0) {
-        page = page++;
-        setState(() {
-          isLoading = true;
-        });
-        apiService.getPaginatedMovies(widget.uriPath, page).then((value) {
-          setState(() {
-            movies.addAll(value.results);
-            isLoading = false;
-          });
-        });
-      }
-    });
-  }
-
-  Widget getView() {
-    if (isLoading && movies.isEmpty) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (isLoading) {
-      return Align(
-        alignment: Alignment.bottomCenter,
-        child: CircularProgressIndicator(),
-      );
-    }
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height) / 2;
-    final double itemWidth = size.width / 2;
-
-    return GridView.builder(
-        itemCount: movies.length,
-        controller: _scrollController,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: (itemWidth / itemHeight),
-        ),
-        itemBuilder: (context, index) {
-          var movie = movies[index];
-          return GestureDetector(
-            onTap: () {
-              navigate(context, movie);
-            },
-            child: MovieGridItem(
-              poster: movie.posterPath,
-              title: movie.title,
-              genre: "",
-              releaseDate: movie.releaseDate,
-              rating: movie.voteAverage,
-            ),
-          );
-        });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height) / 2;
-    final double itemWidth = size.width / 2;
-
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.category),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(16),
-          child: getView(),
-        ));
-  }
-}
-
-class MoviePage extends StatefulWidget {
-  final String category;
-  final String uriPath;
-  int page = 1;
-
-  MoviePage({this.category, this.uriPath});
-
-  @override
-  State<StatefulWidget> createState() {
-    return _MoviePage();
-  }
-}
-
-class _MoviePage extends State<MoviePage> {
+class _GridMovieItem extends State<MovieGrid> {
   ApiService apiService = ApiService();
 
   @override
