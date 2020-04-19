@@ -1,7 +1,11 @@
 # movie
 
-MovieDB Application built on MVC.
-
+ - Basic widgets
+ - Endless Scrolling
+ - Listview
+ - FutureBuilder
+ - Asyn Await
+ 
 ## Screens
 
 <p>
