@@ -4,6 +4,7 @@ import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_dto.dart';
 import 'package:movie/data/dto/paginate.dart';
 import 'package:movie/widgets/grid_item.dart';
+import 'package:movie/widgets/loading_indicator.dart';
 
 import 'movie_detail.dart';
 
@@ -31,7 +32,10 @@ class _GridMovieItem extends State<MovieGrid> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: Colors.white,
-        title: Text(widget.category, style: TextStyle(color: Colors.black),),
+        title: Text(
+          widget.category,
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: Container(
         padding: EdgeInsets.all(16),
@@ -154,10 +158,7 @@ class _MovieTileState extends State<MovieTile> {
       ),
       itemBuilder: (context, index) {
         if (index == movies.length) {
-          return Align(
-            child: CircularProgressIndicator(),
-            alignment: Alignment.bottomCenter,
-          );
+          return LoadingIndicator();
         }
         var movie = movies[index];
         return GestureDetector(
