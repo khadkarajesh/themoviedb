@@ -5,6 +5,8 @@
  - Listview
  - FutureBuilder
  - Async Await
+ - Routing
+ - GridView
  
 ## Screens
 
