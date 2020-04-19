@@ -201,20 +201,31 @@ class _MovieTileState extends State<MovieTile> {
   ApiService apiService = ApiService();
   bool isLoading = false;
 
+  bool isScrollReachedToEnd() {
+    return scrollController.position.maxScrollExtent >
+            scrollController.offset &&
+        scrollController.position.maxScrollExtent - scrollController.offset <=
+            50;
+  }
+
+  bool isScrollReachedToTop() {
+    return scrollController.position.atEdge &&
+        scrollController.position.pixels == 0;
+  }
+
   @override
   void initState() {
     movies = widget.movies;
     currentPage = widget.currentPage;
 
     scrollController.addListener(() {
-      if (scrollController.position.atEdge &&
-          scrollController.position.pixels == 0) {
+      if (isScrollReachedToTop()) {
         currentPage = 1;
-      } else if (scrollController.position.maxScrollExtent >
-              scrollController.offset &&
-          scrollController.position.maxScrollExtent - scrollController.offset <=
-              50) {
+      } else if (isScrollReachedToEnd()) {
         if (currentPage < widget.totalPages) {
+          setState(() {
+            isLoading = true;
+          });
           currentPage++;
           apiService
               .getPaginatedMovies(widget.uriPath, currentPage)
@@ -249,34 +260,36 @@ class _MovieTileState extends State<MovieTile> {
     final double itemHeight = (size.height) / 2;
     final double itemWidth = size.width / 2;
 
-    return isLoading
-        ? Align(
-            alignment: Alignment.bottomCenter,
+    return GridView.builder(
+      itemCount: isLoading ? movies.length + 1 : movies.length,
+      controller: scrollController,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        childAspectRatio: (itemWidth / itemHeight),
+      ),
+      itemBuilder: (context, index) {
+        if (index == movies.length) {
+          return Align(
             child: CircularProgressIndicator(),
-          )
-        : GridView.builder(
-            itemCount: movies.length,
-            controller: scrollController,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              childAspectRatio: (itemWidth / itemHeight),
-            ),
-            itemBuilder: (context, index) {
-              var movie = movies[index];
-              return GestureDetector(
-                onTap: () {
-                  navigate(context, movie);
-                },
-                child: MovieGridItem(
-                  poster: movie.posterPath,
-                  title: movie.title,
-                  genre: "",
-                  releaseDate: movie.releaseDate,
-                  rating: movie.voteAverage,
-                ),
-              );
-            });
+            alignment: Alignment.bottomCenter,
+          );
+        }
+        var movie = movies[index];
+        return GestureDetector(
+          onTap: () {
+            navigate(context, movie);
+          },
+          child: MovieGridItem(
+            poster: movie.posterPath,
+            title: movie.title,
+            genre: "",
+            releaseDate: movie.releaseDate,
+            rating: movie.voteAverage,
+          ),
+        );
+      },
+    );
   }
 }
