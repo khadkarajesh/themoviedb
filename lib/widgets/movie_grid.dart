@@ -148,7 +148,9 @@ class _MoviePage extends State<MoviePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category),
+        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Colors.white,
+        title: Text(widget.category, style: TextStyle(color: Colors.black),),
       ),
       body: Container(
         padding: EdgeInsets.all(16),
