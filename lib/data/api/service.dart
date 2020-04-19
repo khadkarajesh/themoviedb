@@ -51,6 +51,24 @@ class ApiService {
     }
   }
 
+
+  Future<Paginate<MovieDto>> getPaginatedSuggestedMovies(int movieId, category, page) async {
+    try {
+      var uri = Uri.https(
+          BASE_URL, "/3/movie/$movieId/$category", {'api_key': apiKey, 'page': page.toString()});
+      var response = await client.get(uri.toString());
+      var body = json.decode(response.body);
+      List<dynamic> results = body['results'];
+      var data = results.map((dynamic e) => MovieDto.fromJson(e)).toList();
+      return Paginate<MovieDto>(
+          totalResults: body['total_results'],
+          totalPages: body['total_pages'],
+          results: data);
+    } on HttpException catch (e) {
+      throw (e.message);
+    }
+  }
+
   Future<List<VideoDto>> getVideos(int movieId) async {
     try {
       var uri =

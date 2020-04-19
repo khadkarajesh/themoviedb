@@ -4,8 +4,12 @@ import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_dto.dart';
 import 'package:movie/widgets/overview.dart';
 import 'package:movie/widgets/poster.dart';
+import 'package:movie/widgets/recomendation_title.dart';
 import 'package:movie/widgets/similar_movie_list.dart';
+import 'package:movie/widgets/suggested_movie_grid.dart';
 import 'package:movie/widgets/video.dart';
+
+import 'movie_grid.dart';
 
 class MovieDetail extends StatefulWidget {
   static const routeName = '/detail';
@@ -21,6 +25,15 @@ class MovieDetail extends StatefulWidget {
 
 class _MovieDetailState extends State<MovieDetail> {
   final ApiService apiService = ApiService();
+
+  void navigate(context, movieId, title, uriPath) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => SuggestedMovieGrid(
+              category: title,
+              uriPath: uriPath,
+              movieId: movieId,
+            )));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,32 +137,16 @@ class _MovieDetailState extends State<MovieDetail> {
                     movieId: widget.movie.id,
                     category: "similar",
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Recommendations",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 16.0,
-                      ),
-                      Icon(Icons.arrow_forward),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 16,
+                  InkWell(
+                    child: RecommendationTitle(),
+                    onTap: () {
+                      navigate(
+                        context,
+                        widget.movie.id,
+                        "Recommended",
+                        "recommendations",
+                      );
+                    },
                   ),
                   SuggestedMovies(
                     movieId: widget.movie.id,
