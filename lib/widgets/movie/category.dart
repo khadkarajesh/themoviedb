@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/widgets/movie_list.dart';
+import 'package:movie/widgets/movie/movie_list.dart';
 
 import 'movie_grid.dart';
 

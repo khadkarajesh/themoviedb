@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movie/widgets/search.dart';
-import 'package:movie/widgets/tv_shows.dart';
+import 'package:movie/widgets/search/search.dart';
+import 'package:movie/widgets/tvshow/tv_shows.dart';
 
-import 'account.dart';
-import 'movie_category_list.dart';
+import '../account/account.dart';
+import '../movie/movie_category_list.dart';
 
 class AppBottomNavigation extends StatefulWidget {
   AppBottomNavigation({Key key}) : super(key: key);

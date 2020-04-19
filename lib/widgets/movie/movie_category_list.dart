@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:movie/data/dto/category_dto.dart';
-import 'package:movie/widgets/category.dart';
+import 'package:movie/widgets/movie/category.dart';
 
 class MovieCategoryList extends StatelessWidget {
   List<CategoryDto> categories = [

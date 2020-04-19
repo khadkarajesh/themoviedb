@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_dto.dart';
-import 'package:movie/widgets/overview.dart';
-import 'package:movie/widgets/poster.dart';
-import 'package:movie/widgets/recomendation_title.dart';
-import 'package:movie/widgets/similar_movie_list.dart';
-import 'package:movie/widgets/similar_movie_title.dart';
-import 'package:movie/widgets/suggested_movie_grid.dart';
-import 'package:movie/widgets/video.dart';
+import 'package:movie/widgets/movie/overview.dart';
+import 'package:movie/widgets/movie/poster.dart';
+import 'package:movie/widgets/movie/recomendation_title.dart';
+import 'package:movie/widgets/movie/similar_movie_list.dart';
+import 'package:movie/widgets/movie/similar_movie_title.dart';
+import 'package:movie/widgets/movie/suggested_movie_grid.dart';
+import 'package:movie/widgets/movie/video.dart';
 
 import 'movie_grid.dart';
 
