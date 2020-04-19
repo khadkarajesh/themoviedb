@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie/data/dto/paginate.dart';
 
 import '../dto/movie_dto.dart';
 import '../dto/video_dto.dart';
@@ -28,6 +29,23 @@ class ApiService {
       var body = json.decode(response.body);
       List<dynamic> results = body['results'];
       return results.map((dynamic e) => MovieDto.fromJson(e)).toList();
+    } on HttpException catch (e) {
+      throw (e.message);
+    }
+  }
+
+  Future<Paginate<MovieDto>> getPaginatedMovies(category, page) async {
+    try {
+      var uri = Uri.https(
+          BASE_URL, "/3/movie/$category", {'api_key': apiKey, 'page': page.toString()});
+      var response = await client.get(uri.toString());
+      var body = json.decode(response.body);
+      List<dynamic> results = body['results'];
+      var data = results.map((dynamic e) => MovieDto.fromJson(e)).toList();
+      return Paginate<MovieDto>(
+          totalResults: body['total_results'],
+          totalPages: body['total_pages'],
+          results: data);
     } on HttpException catch (e) {
       throw (e.message);
     }

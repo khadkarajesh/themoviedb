@@ -12,7 +12,7 @@ class Category extends StatelessWidget {
 
   void navigate(context, category) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => MovieGrid(
+        builder: (context) => MoviePage(
               category: this.title,
               uriPath: this.uriPath,
             )));
