@@ -6,6 +6,7 @@ import 'package:movie/widgets/overview.dart';
 import 'package:movie/widgets/poster.dart';
 import 'package:movie/widgets/recomendation_title.dart';
 import 'package:movie/widgets/similar_movie_list.dart';
+import 'package:movie/widgets/similar_movie_title.dart';
 import 'package:movie/widgets/suggested_movie_grid.dart';
 import 'package:movie/widgets/video.dart';
 
@@ -100,39 +101,17 @@ class _MovieDetailState extends State<MovieDetail> {
                   Overview(
                     overview: widget.movie.overview,
                   ),
-                  Material(
-                      child: InkWell(
-                          onTap: () {},
-                          child: Padding(
-                              padding: EdgeInsets.only(top: 16, bottom: 16),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Similar Movies",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Text(
-                                        "Popular with similar viewers",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 16.0,
-                                  ),
-                                  Icon(Icons.arrow_forward),
-                                ],
-                              )))),
+                  InkWell(
+                    onTap: () {
+                      navigate(
+                        context,
+                        widget.movie.id,
+                        "Similar",
+                        "similar",
+                      );
+                    },
+                    child: SimilarMovieTitle(),
+                  ),
                   SuggestedMovies(
                     movieId: widget.movie.id,
                     category: "similar",
