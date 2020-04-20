@@ -9,6 +9,7 @@ import 'package:movie/widgets/movie/similar_movie_list.dart';
 import 'package:movie/widgets/movie/similar_movie_title.dart';
 import 'package:movie/widgets/movie/suggested_movie_grid.dart';
 import 'package:movie/widgets/movie/video.dart';
+import 'package:movie/widgets/overview/overview_detail.dart';
 
 import 'movie_grid.dart';
 
@@ -32,6 +33,16 @@ class _MovieDetailState extends State<MovieDetail> {
         builder: (context) => SuggestedMovieGrid(
               category: title,
               uriPath: uriPath,
+              movieId: movieId,
+            )));
+  }
+
+  void navigateToMovieOverview(
+      context, int movieId, String title, String poster) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => OverViewDetail(
+              title: title,
+              poster: poster,
               movieId: movieId,
             )));
   }
@@ -98,8 +109,18 @@ class _MovieDetailState extends State<MovieDetail> {
                   SizedBox(
                     height: 16,
                   ),
-                  Overview(
-                    overview: widget.movie.overview,
+                  InkWell(
+                    onTap: () {
+                      navigateToMovieOverview(
+                        context,
+                        widget.movie.id,
+                        widget.movie.title,
+                        widget.movie.posterPath,
+                      );
+                    },
+                    child: Overview(
+                      overview: widget.movie.overview,
+                    ),
                   ),
                   InkWell(
                     onTap: () {

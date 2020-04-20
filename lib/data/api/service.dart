@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie/data/dto/movie_detail_dto.dart';
 import 'package:movie/data/dto/paginate.dart';
 
 import '../dto/movie_dto.dart';
@@ -22,22 +23,10 @@ class ApiService {
 
   ApiService._internal();
 
-  Future<List<MovieDto>> getMovies(String category) async {
-    try {
-      var uri = Uri.https(BASE_URL, "/3/movie/$category", {'api_key': apiKey});
-      var response = await client.get(uri.toString());
-      var body = json.decode(response.body);
-      List<dynamic> results = body['results'];
-      return results.map((dynamic e) => MovieDto.fromJson(e)).toList();
-    } on HttpException catch (e) {
-      throw (e.message);
-    }
-  }
-
   Future<Paginate<MovieDto>> getPaginatedMovies(category, page) async {
     try {
-      var uri = Uri.https(
-          BASE_URL, "/3/movie/$category", {'api_key': apiKey, 'page': page.toString()});
+      var uri = Uri.https(BASE_URL, "/3/movie/$category",
+          {'api_key': apiKey, 'page': page.toString()});
       var response = await client.get(uri.toString());
       var body = json.decode(response.body);
       List<dynamic> results = body['results'];
@@ -51,11 +40,22 @@ class ApiService {
     }
   }
 
-
-  Future<Paginate<MovieDto>> getPaginatedSuggestedMovies(int movieId, category, page) async {
+  Future<MovieDetailDto> getMovieDetail(int movieId) async {
     try {
-      var uri = Uri.https(
-          BASE_URL, "/3/movie/$movieId/$category", {'api_key': apiKey, 'page': page.toString()});
+      var uri = Uri.https(BASE_URL, "/3/movie/$movieId", {'api_key': apiKey});
+      var response = await client.get(uri.toString());
+      var body = json.decode(response.body);
+      return MovieDetailDto().fromJson(body);
+    } on HttpException catch (e) {
+      throw (e.message);
+    }
+  }
+
+  Future<Paginate<MovieDto>> getPaginatedSuggestedMovies(
+      int movieId, category, page) async {
+    try {
+      var uri = Uri.https(BASE_URL, "/3/movie/$movieId/$category",
+          {'api_key': apiKey, 'page': page.toString()});
       var response = await client.get(uri.toString());
       var body = json.decode(response.body);
       List<dynamic> results = body['results'];
