@@ -166,6 +166,7 @@ class _MovieTileState extends State<MovieTile> {
             navigate(context, movie);
           },
           child: MovieGridItem(
+            genreId: movie.genreId,
             poster: movie.posterPath,
             title: movie.title,
             genre: "",
