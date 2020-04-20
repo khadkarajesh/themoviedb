@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_detail_dto.dart';
 import 'package:movie/widgets/overview/container_with_border.dart';
@@ -76,12 +77,84 @@ class _OverViewDetailState extends State<OverViewDetail> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: 8,
+                          ),
+                          child: Text(
+                            movieDetail.tagline,
+                            style: TextStyle(
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
                         Text(
                           movieDetail.overview,
                           textAlign: TextAlign.justify,
                         ),
                       ],
                     ),
+                  ),
+                ),
+                BorderContainer(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Adult",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(movieDetail.adult ? "Yes" : "No"),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Release date",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(movieDetail.releaseDate),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 8, bottom: 8),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Budget",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(movieDetail.budget.toString())
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: 8,
+                          bottom: 8,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              "Revenue",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            Text(movieDetail.revenue.toString())
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
