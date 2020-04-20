@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie/widgets/nav/app_navigation.dart';
-import 'package:movie/widgets/movie/movie_detail.dart';
+import 'package:movie/widgets/movie/detail/movie_detail.dart';
 
 void main() => runApp(App());
 

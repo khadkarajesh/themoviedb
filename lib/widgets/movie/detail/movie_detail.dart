@@ -5,13 +5,13 @@ import 'package:movie/data/dto/movie_dto.dart';
 import 'package:movie/widgets/movie/overview.dart';
 import 'package:movie/widgets/movie/poster.dart';
 import 'package:movie/widgets/movie/recomendation_title.dart';
-import 'package:movie/widgets/movie/similar_movie_list.dart';
+import 'package:movie/widgets/movie/list/similar_movie_list.dart';
 import 'package:movie/widgets/movie/similar_movie_title.dart';
-import 'package:movie/widgets/movie/suggested_movie_grid.dart';
+import 'package:movie/widgets/movie/grid/suggested_movie_grid.dart';
 import 'package:movie/widgets/movie/video.dart';
 import 'package:movie/widgets/overview/overview_detail.dart';
 
-import 'movie_grid.dart';
+import '../grid/movie_grid.dart';
 
 class MovieDetail extends StatefulWidget {
   static const routeName = '/detail';

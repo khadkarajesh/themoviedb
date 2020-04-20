@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_dto.dart';
 
-import 'movie.dart';
-import 'movie_detail.dart';
+import '../movie.dart';
+import '../detail/movie_detail.dart';
 
 class SuggestedMovies extends StatefulWidget {
   final int movieId;

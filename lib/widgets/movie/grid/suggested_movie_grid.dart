@@ -3,19 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
 import 'package:movie/data/dto/movie_dto.dart';
 import 'package:movie/data/dto/paginate.dart';
-import 'package:movie/widgets/movie/grid_item.dart';
+import 'package:movie/widgets/movie/grid/grid_item.dart';
 import 'package:movie/widgets/loading_indicator.dart';
 
-import 'movie_detail.dart';
+import '../detail/movie_detail.dart';
 
 //https://github.com/CodingInfinite/FutureBuilderWithPagination/blob/master/lib/main.dart
 
-class MovieGrid extends StatefulWidget {
+class SuggestedMovieGrid extends StatefulWidget {
   final String category;
   final String uriPath;
-  int page = 1;
+  final int movieId;
+  final int page = 1;
 
-  MovieGrid({this.category, this.uriPath});
+  SuggestedMovieGrid({this.category, this.uriPath, this.movieId});
 
   @override
   State<StatefulWidget> createState() {
@@ -23,7 +24,7 @@ class MovieGrid extends StatefulWidget {
   }
 }
 
-class _GridMovieItem extends State<MovieGrid> {
+class _GridMovieItem extends State<SuggestedMovieGrid> {
   ApiService apiService = ApiService();
 
   @override
@@ -40,12 +41,14 @@ class _GridMovieItem extends State<MovieGrid> {
       body: Container(
         padding: EdgeInsets.all(16),
         child: FutureBuilder<Paginate<MovieDto>>(
-          future: apiService.getPaginatedMovies(widget.uriPath, widget.page),
+          future: apiService.getPaginatedSuggestedMovies(
+              widget.movieId, widget.uriPath, widget.page),
           builder: (context, AsyncSnapshot<Paginate<MovieDto>> snapshot) {
             if (snapshot.hasData &&
                 snapshot.connectionState ==
                     ConnectionState.done) if (snapshot.hasData) {
               return MovieTile(
+                movieId: widget.movieId,
                 movies: snapshot.data.results,
                 currentPage: widget.page,
                 totalPages: snapshot.data.totalPages,
@@ -71,9 +74,15 @@ class MovieTile extends StatefulWidget {
   final int currentPage;
   final String uriPath;
   final int totalPages;
+  final int movieId;
 
   MovieTile(
-      {Key key, this.movies, this.currentPage, this.totalPages, this.uriPath});
+      {Key key,
+      this.movieId,
+      this.movies,
+      this.currentPage,
+      this.totalPages,
+      this.uriPath});
 
   @override
   State<StatefulWidget> createState() {
@@ -115,7 +124,8 @@ class _MovieTileState extends State<MovieTile> {
           });
           currentPage++;
           apiService
-              .getPaginatedMovies(widget.uriPath, currentPage)
+              .getPaginatedSuggestedMovies(
+                  widget.movieId, widget.uriPath, currentPage)
               .then((value) {
             isLoading = false;
             setState(() {

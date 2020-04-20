@@ -6,8 +6,8 @@ import 'package:movie/data/dto/paginate.dart';
 import 'package:movie/utils/app.dart';
 import 'package:movie/widgets/loading_indicator.dart';
 
-import 'movie.dart';
-import 'movie_detail.dart';
+import '../movie.dart';
+import '../detail/movie_detail.dart';
 
 class MovieList extends StatefulWidget {
   final String category;
