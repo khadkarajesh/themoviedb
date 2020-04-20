@@ -40,6 +40,7 @@ class DatabaseHelper {
         '''create table $tableGenre ($id INTEGER, $name TEXT NOT NULL)''');
   }
 
+
   Future<int> insert(Genre genre) async {
     Database db = await database;
     return await db.insert(tableGenre, genre.toMap());

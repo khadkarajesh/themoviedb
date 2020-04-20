@@ -102,14 +102,16 @@ class ApiService {
 
   void getGenres() async {
     try {
+      int count = await genreRepository.getCount();
+      if (count > 0) return;
       var uri = Uri.https(BASE_URL, "3/genre/movie/list", {'api_key': apiKey});
       var response = await client.get(uri.toString());
       var body = json.decode(response.body);
       List<dynamic> results = body['genres'];
       List<Genre> genres =
           results.map((dynamic e) => Genre.fromJson(e)).toList();
-      genres.forEach((genre) {
-        genreRepository.insert(genre);
+      genres.forEach((genre) async {
+        await genreRepository.insert(genre);
       });
     } on HttpException catch (e) {
       throw (e.message);

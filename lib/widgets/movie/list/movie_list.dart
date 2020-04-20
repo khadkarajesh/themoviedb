@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/data/api/service.dart';
+import 'package:movie/data/dto/genre.dart';
 import 'package:movie/data/dto/movie_dto.dart';
 import 'package:movie/data/dto/paginate.dart';
+import 'package:movie/data/local/database.dart';
+import 'package:movie/data/local/genre_repository.dart';
 import 'package:movie/utils/app.dart';
 import 'package:movie/widgets/loading_indicator.dart';
 
@@ -144,6 +147,7 @@ class _SingleMovieItem extends State<SingleMovieItem> {
             navigate(context, movie);
           },
           child: Movie(
+            id: movie.genreId,
             poster: movie.posterPath,
             title: movie.title,
             genre: "",

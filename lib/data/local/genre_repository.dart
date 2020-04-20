@@ -19,4 +19,11 @@ class GenreRepository {
         columns: [id, name], where: '$id = ?', whereArgs: [genreId]);
     return maps.length > 0 ? Genre.fromMap(maps.first) : null;
   }
+
+  Future<int> getCount() async {
+    Database db = await database;
+    var rows = await db.rawQuery('SELECT COUNT(*) FROM $tableGenre');
+    int total = Sqflite.firstIntValue(rows);
+    return total;
+  }
 }

@@ -9,16 +9,18 @@ class MovieDto {
   final String posterPath;
   final String backDropPath;
   final bool video;
+  final int genreId;
 
   MovieDto(
       {this.id,
-        this.title,
-        this.overview,
-        this.voteAverage,
-        this.releaseDate,
-        this.posterPath,
-        this.backDropPath,
-        this.video});
+      this.title,
+      this.overview,
+      this.voteAverage,
+      this.releaseDate,
+      this.posterPath,
+      this.backDropPath,
+      this.video,
+      this.genreId});
 
   factory MovieDto.fromJson(Map<String, dynamic> json) {
     return MovieDto(
@@ -29,6 +31,7 @@ class MovieDto {
         releaseDate: json['release_date'],
         posterPath: json['poster_path'],
         backDropPath: json['backdrop_path'],
-        video: json['video']);
+        video: json['video'],
+        genreId: json['genre_ids'][0]);
   }
 }

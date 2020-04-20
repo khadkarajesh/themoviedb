@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/data/dto/genre.dart';
+import 'package:movie/data/local/database.dart';
+import 'package:movie/data/local/genre_repository.dart';
 
-class Movie extends StatelessWidget {
+class Movie extends StatefulWidget {
+  final int id;
   final String poster;
   final String title;
   final String genre;
@@ -9,11 +13,33 @@ class Movie extends StatelessWidget {
   final num rating;
 
   Movie(
-      {@required this.poster,
+      {@required this.id,
+      @required this.poster,
       @required this.title,
       @required this.genre,
       @required this.releaseDate,
       @required this.rating});
+
+  @override
+  State<StatefulWidget> createState() {
+    return _MovieState();
+  }
+}
+
+class _MovieState extends State<Movie> {
+  GenreRepository genreRepository =
+      GenreRepository(database: DatabaseHelper.instance.database);
+  Genre genre;
+
+  @override
+  void initState() {
+    genreRepository.getGenre(widget.id).then((value) {
+      setState(() {
+        genre = value;
+      });
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +55,7 @@ class Movie extends StatelessWidget {
               width: 130,
               fit: BoxFit.fill,
               placeholder: 'assets/placeholder.png',
-              image: 'http://image.tmdb.org/t/p/w185/${this.poster}'),
+              image: 'http://image.tmdb.org/t/p/w185/${widget.poster}'),
         ),
         Align(
           alignment: Alignment.centerLeft,
@@ -38,7 +64,7 @@ class Movie extends StatelessWidget {
               top: 8,
             ),
             child: Text(
-              "${this.title}",
+              "${widget.title}",
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -49,14 +75,14 @@ class Movie extends StatelessWidget {
             direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("Sci-Fi"),
+              Text(genre != null ? genre.name : ''),
               Row(
                 children: <Widget>[
                   Icon(Icons.favorite_border),
                   SizedBox(
                     width: 4,
                   ),
-                  Text("${this.rating}")
+                  Text("${widget.rating}")
                 ],
               ),
             ],
