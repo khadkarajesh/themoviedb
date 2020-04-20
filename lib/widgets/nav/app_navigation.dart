@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:movie/data/api/service.dart';
 import 'package:movie/widgets/search/search.dart';
 import 'package:movie/widgets/tvshow/tv_shows.dart';
 
@@ -14,6 +15,13 @@ class AppBottomNavigation extends StatefulWidget {
 
 class _AppBottomNavigation extends State<AppBottomNavigation> {
   int _selectedIndex = 0;
+  ApiService apiService = ApiService();
+
+  @override
+  void initState() {
+    apiService.getGenres();
+    super.initState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {

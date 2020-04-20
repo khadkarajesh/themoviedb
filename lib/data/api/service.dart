@@ -3,8 +3,11 @@ import 'dart:io';
 
 import 'package:logger/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:movie/data/dto/genre.dart';
 import 'package:movie/data/dto/movie_detail_dto.dart';
 import 'package:movie/data/dto/paginate.dart';
+import 'package:movie/data/local/database.dart';
+import 'package:movie/data/local/genre_repository.dart';
 
 import '../dto/movie_dto.dart';
 import '../dto/video_dto.dart';
@@ -14,6 +17,8 @@ class ApiService {
   static const apiKey = "3d9f6ef05faa3072ee2caf7fb6870964";
   var logger = Logger();
   var client = http.Client();
+  GenreRepository genreRepository =
+      GenreRepository(database: DatabaseHelper.instance.database);
 
   static final ApiService _apiService = ApiService._internal();
 
@@ -90,6 +95,22 @@ class ApiService {
       var body = json.decode(response.body);
       List<dynamic> results = body['results'];
       return results.map((dynamic e) => MovieDto.fromJson(e)).toList();
+    } on HttpException catch (e) {
+      throw (e.message);
+    }
+  }
+
+  void getGenres() async {
+    try {
+      var uri = Uri.https(BASE_URL, "3/genre/movie/list", {'api_key': apiKey});
+      var response = await client.get(uri.toString());
+      var body = json.decode(response.body);
+      List<dynamic> results = body['genres'];
+      List<Genre> genres =
+          results.map((dynamic e) => Genre.fromJson(e)).toList();
+      genres.forEach((genre) {
+        genreRepository.insert(genre);
+      });
     } on HttpException catch (e) {
       throw (e.message);
     }

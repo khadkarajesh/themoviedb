@@ -7,52 +7,84 @@ import 'package:movie/data/dto/movie_detail_dto.dart';
 import 'package:movie/generated/json/movie_detail_dto_helper.dart';
 
 class JsonConvert<T> {
-	T fromJson(Map<String, dynamic> json) {
-		return _getFromJson<T>(runtimeType, this, json);
-	}
+  T fromJson(Map<String, dynamic> json) {
+    return _getFromJson<T>(runtimeType, this, json);
+  }
 
   Map<String, dynamic> toJson() {
-		return _getToJson<T>(runtimeType, this);
+    return _getToJson<T>(runtimeType, this);
   }
 
   static _getFromJson<T>(Type type, data, json) {
-    switch (type) {			case MovieDetailDto:
-			return movieDetailDtoEntityFromJson(data as MovieDetailDto, json) as T;			case MovieDetailDtoGenre:
-			return movieDetailDtoGenreFromJson(data as MovieDetailDtoGenre, json) as T;			case MovieDetailDtoProductionCompany:
-			return movieDetailDtoProductionCompanyFromJson(data as MovieDetailDtoProductionCompany, json) as T;			case MovieDetailDtoProductionCountry:
-			return movieDetailDtoProductionCountryFromJson(data as MovieDetailDtoProductionCountry, json) as T;			case MovieDetailDtoSpokenLanguage:
-			return movieDetailDtoSpokenLanguageFromJson(data as MovieDetailDtoSpokenLanguage, json) as T;    }
+    switch (type) {
+      case MovieDetailDto:
+        return movieDetailDtoFromJson(data as MovieDetailDto, json) as T;
+      case MovieDetailDtoGenre:
+        return movieDetailDtoGenreFromJson(data as MovieDetailDtoGenre, json)
+            as T;
+      case MovieDetailDtoProductionCompany:
+        return movieDetailDtoProductionCompanyFromJson(
+            data as MovieDetailDtoProductionCompany, json) as T;
+      case MovieDetailDtoProductionCountry:
+        return movieDetailDtoProductionCountryFromJson(
+            data as MovieDetailDtoProductionCountry, json) as T;
+      case MovieDetailDtoSpokenLanguage:
+        return movieDetailDtoSpokenLanguageFromJson(
+            data as MovieDetailDtoSpokenLanguage, json) as T;
+    }
     return data as T;
   }
 
   static _getToJson<T>(Type type, data) {
-		switch (type) {			case MovieDetailDto:
-			return movieDetailDtoEntityToJson(data as MovieDetailDto);			case MovieDetailDtoGenre:
-			return movieDetailDtoGenreToJson(data as MovieDetailDtoGenre);			case MovieDetailDtoProductionCompany:
-			return movieDetailDtoProductionCompanyToJson(data as MovieDetailDtoProductionCompany);			case MovieDetailDtoProductionCountry:
-			return movieDetailDtoProductionCountryToJson(data as MovieDetailDtoProductionCountry);			case MovieDetailDtoSpokenLanguage:
-			return movieDetailDtoSpokenLanguageToJson(data as MovieDetailDtoSpokenLanguage);    }
+    switch (type) {
+      case MovieDetailDto:
+        return movieDetailDtoToJson(data as MovieDetailDto);
+      case MovieDetailDtoGenre:
+        return movieDetailDtoGenreToJson(data as MovieDetailDtoGenre);
+      case MovieDetailDtoProductionCompany:
+        return movieDetailDtoProductionCompanyToJson(
+            data as MovieDetailDtoProductionCompany);
+      case MovieDetailDtoProductionCountry:
+        return movieDetailDtoProductionCountryToJson(
+            data as MovieDetailDtoProductionCountry);
+      case MovieDetailDtoSpokenLanguage:
+        return movieDetailDtoSpokenLanguageToJson(
+            data as MovieDetailDtoSpokenLanguage);
+    }
     return data as T;
   }
+
   //Go back to a single instance by type
   static _fromJsonSingle(String type, json) {
-    switch (type) {			case 'MovieDetailDtoEntity':
-			return MovieDetailDto().fromJson(json);			case 'MovieDetailDtoGenre':
-			return MovieDetailDtoGenre().fromJson(json);			case 'MovieDetailDtoProductionCompany':
-			return MovieDetailDtoProductionCompany().fromJson(json);			case 'MovieDetailDtoProductionCountry':
-			return MovieDetailDtoProductionCountry().fromJson(json);			case 'MovieDetailDtoSpokenLanguage':
-			return MovieDetailDtoSpokenLanguage().fromJson(json);    }
+    switch (type) {
+      case 'MovieDetailDto':
+        return MovieDetailDto().fromJson(json);
+      case 'MovieDetailDtoGenre':
+        return MovieDetailDtoGenre().fromJson(json);
+      case 'MovieDetailDtoProductionCompany':
+        return MovieDetailDtoProductionCompany().fromJson(json);
+      case 'MovieDetailDtoProductionCountry':
+        return MovieDetailDtoProductionCountry().fromJson(json);
+      case 'MovieDetailDtoSpokenLanguage':
+        return MovieDetailDtoSpokenLanguage().fromJson(json);
+    }
     return null;
   }
 
   //empty list is returned by type
   static _getListFromType(String type) {
-    switch (type) {			case 'MovieDetailDtoEntity':
-			return List<MovieDetailDto>();			case 'MovieDetailDtoGenre':
-			return List<MovieDetailDtoGenre>();			case 'MovieDetailDtoProductionCompany':
-			return List<MovieDetailDtoProductionCompany>();			case 'MovieDetailDtoProductionCountry':
-			return List<MovieDetailDtoProductionCountry>();			case 'MovieDetailDtoSpokenLanguage':
-			return List<MovieDetailDtoSpokenLanguage>();    }
+    switch (type) {
+      case 'MovieDetailDto':
+        return List<MovieDetailDto>();
+      case 'MovieDetailDtoGenre':
+        return List<MovieDetailDtoGenre>();
+      case 'MovieDetailDtoProductionCompany':
+        return List<MovieDetailDtoProductionCompany>();
+      case 'MovieDetailDtoProductionCountry':
+        return List<MovieDetailDtoProductionCountry>();
+      case 'MovieDetailDtoSpokenLanguage':
+        return List<MovieDetailDtoSpokenLanguage>();
+    }
     return null;
   }
 

@@ -1,6 +1,6 @@
 import 'package:movie/data/dto/movie_detail_dto.dart';
 
-movieDetailDtoEntityFromJson(MovieDetailDto data, Map<String, dynamic> json) {
+movieDetailDtoFromJson(MovieDetailDto data, Map<String, dynamic> json) {
 	if (json['adult'] != null) {
 		data.adult = json['adult'];
 	}
@@ -91,7 +91,7 @@ movieDetailDtoEntityFromJson(MovieDetailDto data, Map<String, dynamic> json) {
 	return data;
 }
 
-Map<String, dynamic> movieDetailDtoEntityToJson(MovieDetailDto entity) {
+Map<String, dynamic> movieDetailDtoToJson(MovieDetailDto entity) {
 	final Map<String, dynamic> data = new Map<String, dynamic>();
 	data['adult'] = entity.adult;
 	data['backdrop_path'] = entity.backdropPath;
